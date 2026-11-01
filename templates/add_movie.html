@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="add-movie-main">
+  <div class="form-card">
+    <p class="eyebrow"><span class="eyebrow-line"></span> НОВИЙ ФІЛЬМ</p>
+    <h1 class="form-title">Додати <span class="highlight">фільм</span></h1>
+    <form method="post" class="movie-form">
+      <input class="form-input" name="title" placeholder="Назва фільму" required>
+      <input class="form-input" name="genre" placeholder="Жанр">
+      <input class="form-input" name="duration" type="number" placeholder="Тривалість (хв)">
+      <input class="form-input" name="price" type="number" step="1" placeholder="Ціна квитка">
+      <input class="form-input" name="image_url" placeholder="URL зображення">
+      <textarea class="form-input form-textarea" name="description" placeholder="Опис" rows="4"></textarea>
+      <button class="primary-button form-submit" type="submit">Зберегти фільм</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

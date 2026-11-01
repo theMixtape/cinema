@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101010">
+  <meta name="description" content="Кінопростір - кінотеатр для яскравих вражень, великих історій та незабутніх вечорів.">
+  <title>Кінопростір - місце, де оживають історії</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=2">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand text-brand" href="/" aria-label="Кінопростір — на головну">КІНОПРОСТІР</a>
+    <nav class="main-nav" aria-label="Головна навігація">
+    <a class="nav-link" href="/">Головна</a>
+    <a class="nav-link" href="/about">Про нас</a>
+    <a class="nav-link" href="/movies">Фільми</a>
+    {% if session.get('edit_mode') %}
+    <a class="nav-link" href="/add_movie">Додати фільм</a>
+    {% endif %}
+    </nav>
+  </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

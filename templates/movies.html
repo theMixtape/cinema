@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Фільми{% endblock %}
+
+{% block content %}
+    <h1>Фільми</h1>
+
+    <div class="movie-grid">
+        {% if movies %}
+            {% for m in movies %}
+                <div class="movie-item">
+                    <div class="movie-info">
+                        {% if m['image_url'] %}<img src="{{ m['image_url'] }}" alt="" style="width:100%;border-radius:12px;margin-bottom:8px;">{% endif %}
+                        <strong>{{ m['title'] }}</strong>
+                        <span>{{ m['genre'] }} ({{ m['duration'] }} хв)</span>
+                        <span>{{ m['price']|int }} грн</span>
+                        <p>{{ m['description'] }}</p>
+
+                        <div class="movie-actions">
+                            <a href="{{ url_for('buy_ticket', movie_id=m['id']) }}" class="action-btn buy-btn">Купити квиток</a>
+                            {% if session.get('edit_mode') %}
+                            <a href="{{ url_for('edit_movie', movie_id=m['id']) }}" class="action-btn edit-btn">Редагувати</a>
+                            <form action="{{ url_for('delete_movie', movie_id=m['id']) }}" method="post" style="display:inline;margin:0;">
+                                <button type="submit" onclick="return confirm('Ви впевнені?');" class="action-btn delete-btn">Видалити</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Фільмів не знайдено.</p>
+        {% endif %}
+    </div>
+{% endblock %}

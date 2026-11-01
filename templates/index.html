@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Головна{% endblock %}
+{% block content %}
+    <section class="hero" id="головна" aria-labelledby="hero-title">
+      <div class="hero-slides" aria-hidden="true">
+        <img class="hero-slide active" src="static/images/photo-2.jpg" alt="">
+        <img class="hero-slide" src="static/images/photo-3.jpg" alt="">
+        <img class="hero-slide" src="static/images/photo-5.jpg" alt="">
+      </div>
+      <div class="hero-shade"></div>
+      <div class="hero-content">
+        <p class="eyebrow"><span class="eyebrow-line"></span> ВАШЕ МІСЦЕ ДЛЯ ВЕЛИКИХ ІСТОРІЙ</p>
+        <h1 id="hero-title">Кіно, яке<br>залишається <span>з тобою.</span></h1>
+        <p class="hero-copy">Залиште буденність за дверима. На вас чекають великий екран, особлива атмосфера та історії, які хочеться переживати знову.</p>
+        <a class="primary-button" href="#контакти">Відкрити для себе <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="hero-caption">
+        <span class="caption-dot"></span>
+        <span>ТУТ ПОЧИНАЮТЬСЯ ВРАЖЕННЯ</span>
+      </div>
+      <div class="hero-index" aria-hidden="true">01 <span>/ 01</span></div>
+    </section>
+
+  <section class="features" aria-labelledby="features-title">
+    <div class="features-inner">
+      <h2 id="features-title">Три причини<br><span>повернутися.</span></h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <span class="feature-number">01</span>
+          <h3>Великий екран</h3>
+          <p>Кожна деталь — у повному розмірі. Жодних компромісів із масштабом.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">02</span>
+          <h3>Об'ємний звук</h3>
+          <p>Звук, що огортає. Ви не дивитесь кіно — ви в ньому.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-number">03</span>
+          <h3>Комфорт</h3>
+          <p>Крісла, що приймають форму вас. Затишок у кожному ряді.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+
+  <footer class="site-footer" id="контакти">
+    <a class="brand text-brand footer-brand" href="#головна">КІНОПРОСТІР</a>
+    <p>Історії, що об’єднують.</p>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <a class="footer-top" href="#головна">На початок ↑</a>
+      {% if session.get('edit_mode') %}
+        <a href="{{ url_for('logout') }}" style="padding:8px 14px;border-radius:10px;background:#6b7280;color:#fff;text-decoration:none;">Вийти</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" style="padding:8px 14px;border-radius:10px;background:#3b82f6;color:#fff;text-decoration:none;">Режим редагування</a>
+      {% endif %}
+    </div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}

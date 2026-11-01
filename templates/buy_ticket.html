@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Купити квиток — Кінопростір</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark">К</span><span>КІНО<span class="brand-light">ПРОСТІР</span></span></a>
+    <nav class="main-nav">
+      <a class="nav-link" href="/">Головна</a>
+      <a class="nav-link" href="/about">Про нас</a>
+      <a class="nav-link" href="/movies">Фільми</a>
+      <a class="nav-link" href="/add_movie">Додати фільм</a>
+      <a class="nav-link" href="/gallery">Галерея</a>
+      <a class="nav-link" href="/contact">Контакти</a>
+    </nav>
+  </header>
+  <main style="min-height:70vh;display:grid;place-items:center;padding:40px 6%;">
+    <div style="width:min(760px,100%);padding:40px;border:1px solid rgba(255,255,255,0.08);border-radius:20px;background:rgba(255,255,255,0.03);backdrop-filter:blur(10px);">
+      <h1 style="font-family:var(--font-display);font-size:clamp(32px,4vw,48px);margin:12px 0 28px;">Купити квиток: {{ movie['title'] }}</h1>
+      <div class="seat-map">
+        {% for row in range(1,6) %}
+        <div class="seat-row">
+          {% for col in range(1,9) %}
+          <button type="button" class="seat {% if row == 5 %}vip{% endif %}" data-seat="{{ row }}-{{ col }}" data-vip="{{ '1' if row == 5 else '0' }}">{{ col }}</button>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <p class="price-info">Ціна: {{ movie['price'] or 0 }} грн (VIP: {{ ((movie['price'] or 0) * 1.5)|int }} грн)</p>
+      <p class="total-info">Разом: <span id="totalPrice">0</span> грн</p>
+      <p class="selected-info">Вибрані місця: <span id="selectedSeatsText">—</span></p>
+      <form method="post" style="display:grid;gap:16px;margin-top:20px;">
+        <input name="customer_name" placeholder="Ваше ім'я" required style="padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:15px;">
+        <input name="seats" id="seatsCount" type="number" min="1" placeholder="Кількість місць" required style="padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:15px;">
+        <input name="show_date" type="date" required style="padding:14px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:#fff;font-size:15px;">
+        <input type="hidden" name="selected_seats" id="selectedSeats">
+        <button type="submit" style="justify-content:center;padding:14px 16px;border-radius:12px;border:none;background:#34d399;color:#000;font-size:15px;cursor:pointer;">Купити</button>
+      </form>
+    </div>
+  </main>
+  <script>
+    const basePrice = {{ movie['price'] or 0 }};
+    const selected = new Set();
+    document.querySelectorAll('.seat').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const seat = btn.dataset.seat;
+        if (selected.has(seat)) { selected.delete(seat); btn.classList.remove('selected'); }
+        else { selected.add(seat); btn.classList.add('selected'); }
+        document.getElementById('selectedSeats').value = [...selected].join(',');
+        document.getElementById('seatsCount').value = selected.size;
+        document.getElementById('selectedSeatsText').textContent = selected.size ? [...selected].join(', ') : '—';
+        let total = 0;
+        selected.forEach(s => {
+          const b = document.querySelector('.seat[data-seat="' + s + '"]');
+          const vip = b.dataset.vip === '1';
+          total += vip ? basePrice * 1.5 : basePrice;
+        });
+        document.getElementById('totalPrice').textContent = Math.round(total);
+      });
+    });
+  </script>
+</body>
+</html>

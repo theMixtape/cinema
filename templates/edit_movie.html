@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="edit-movie-main">
+  <div class="form-card">
+    <p class="eyebrow"><span class="eyebrow-line"></span> РЕДАГУВАТИ</p>
+    <h1 class="form-title">Редагувати <span class="highlight">фільм</span></h1>
+    <form method="post" class="movie-form">
+      <input class="form-input" name="title" placeholder="Назва фільму" value="{{ movie['title'] }}" required>
+      <input class="form-input" name="genre" placeholder="Жанр" value="{{ movie['genre'] }}">
+      <input class="form-input" name="duration" type="number" placeholder="Тривалість (хв)" value="{{ movie['duration'] }}">
+      <input class="form-input" name="price" type="number" step="1" placeholder="Ціна квитка" value="{{ movie['price'] }}">
+      <input class="form-input" name="image_url" placeholder="URL зображення" value="{{ movie['image_url'] }}">
+      <textarea class="form-input form-textarea" name="description" placeholder="Опис" rows="4">{{ movie['description'] }}</textarea>
+      <button class="primary-button form-submit" type="submit">Зберегти</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
